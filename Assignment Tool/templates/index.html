@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plagiarism Checker</title>
+
+
+<style>
+
+
+/* 
+.progress {
+    height: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+}
+
+.progress-bar.bg-danger {
+    background-color: #dc3545;
+}
+
+.progress-bar.bg-warning {
+    background-color: #ffc107;
+}
+
+.progress-bar.bg-success {
+    background-color: #28a745;
+} */
+
+
+
+
+
+
+
+.text-light {
+  color: #fff;
+}
+
+.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+.bg-success {
+  background-color: #28a745 !important;
+}
+
+.bg-warning {
+  background-color: #ffc107 !important;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+  background-color: transparent;
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+th {
+  font-weight: 500;
+  text-align: inherit;
+}
+
+th h1,
+th h2 {
+  margin: 0;
+}
+
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+td {
+  text-align: inherit;
+}
+
+.progress {
+  height: 1rem;
+  margin-bottom: 0;
+  overflow: hidden;
+  background-color: #d0d4d8;
+  border-radius: .25rem;
+}
+
+.progress-bar {
+  float: left;
+  width: 0;
+  height: 100%;
+  font-size: 14px;
+  line-height: 1rem;
+  color: #000000;
+  text-align: center;
+  background-color: #007bff;
+  transition: width .6s ease;
+}
+
+.progress-bar-striped {
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-size: 1rem 1rem;
+}
+
+.table th,
+.table td {
+  padding: .75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}
+
+
+
+
+
+/*--------------------  Banner Section -----------------------*/
+.banner{
+background-image:url('templates/mainbgimg1.gif');
+       background-repeat: no-repeat;
+       background-size: cover;
+       background-attachment: fixed;
+       width: 100%;
+       height: auto;
+       padding-bottom: 30px;
+}
+
+
+
+
+
+
+
+
+
+</style>
+
+
+
+</head>
+<body>
+
+  <div class="banner">
+    <div class="container text-center">
+       <h1 style="text-align: center;">Plagiarism Checker</h1>
+       <h2 style="text-align: center;">Plagiarism Report</h2>
+       <!-- <img src="images/community.png"> -->
+       <!-- <h3 style="font-style:oblique;" class="pt-2"> Student Community</h3> -->
+    </div>
+</div>
+
+
+    <!-- <h1 style="text-align: center;" >Plagiarism Checker</h1>
+    <h3 style="text-align: center;" >Plagiarism Report</h3> -->
+    <table style="text-align: center;">
+        <thead>
+            <tr>
+                <th scope="col" width="15%"><h2>Student 1 </h2></th>
+                <th scope="col" width="15%"><h2>Student 2 </h2></th>
+                <th scope="col" width="20%"><h2>% Similar </h2></th>
+                <th scope="col" width="25%"><h2>Comments </h2></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student1, student2, similarity_score in results %}
+            <tr>
+                <td>{{ student1 }}</td>
+                <td>{{ student2 }}</td>
+
+                <td>
+
+                    {% if similarity_score >= 80 %}
+                     <div class="progress">
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: {{ similarity_score }}%;" aria-valuenow="{{ similarity_score }}" aria-valuemin="0" aria-valuemax="100">{{ similarity_score|round(2) }}%</div>
+                     </div>
+                    {% elif similarity_score >= 50 %}
+                     <div class="progress">
+                       <div class="progress-bar bg-warning" role="progressbar" style="width: {{ similarity_score }}%;" aria-valuenow="{{ similarity_score }}" aria-valuemin="0" aria-valuemax="100">{{ similarity_score|round(2) }}%</div>
+                     </div>
+                    {% else %}
+                     <div class="progress">
+                         <div class="progress-bar bg-success" role="progressbar" style="width: {{ similarity_score }}%;" aria-valuenow="{{ similarity_score }}" aria-valuemin="0" aria-valuemax="100">{{ similarity_score|round(2) }}%</div>
+                    </div>
+                   {% endif %}                    
+                </td>
+                <td>
+                 {% if similarity_score >= 80 %}
+                 <div style="color: #dc3545;"> Don't Cheat </div>
+                 {% elif similarity_score >= 50 %}
+                 <div>Good</div>
+                 {% else %}
+                 <div style="color: #35dc72;">Excellent </div>
+                 {% endif %}
+
+                </td>
+
+                <!-- <td>{{ similarity_score|round(2) }}%</td> -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
